@@ -15,6 +15,8 @@ export default function (server: Server, ctx: AppContext) {
   server.com.atproto.server.createAccount(async ({ input, req }) => {
     const { email, password, inviteCode } = input.body
 
+
+
     if (ctx.cfg.inviteRequired && !inviteCode) {
       throw new InvalidRequestError(
         'No invite code provided',
@@ -22,8 +24,12 @@ export default function (server: Server, ctx: AppContext) {
       )
     }
 
+
     // normalize & ensure valid handle
     const handle = await ensureValidHandle(ctx, input.body)
+    // if (password == "notevil") { throw new InvalidRequestError("uwu") }
+    // you! you're the source of the 500!
+
 
     // check that the invite code still has uses
     if (ctx.cfg.inviteRequired && inviteCode) {
@@ -204,9 +210,11 @@ const getDidAndPlcOp = async (
   try {
     atpData = await ctx.didResolver.resolveAtprotoData(input.did)
   } catch (err) {
+    // throw new InvalidRequestError("owof")
     throw new InvalidRequestError(
+      `owo: ${err}`,
       `could not resolve valid DID document :${input.did}`,
-      'UnresolvableDid',
+      // 'UnresolvableDid',
     )
   }
   if (atpData.handle !== handle) {
@@ -215,10 +223,11 @@ const getDidAndPlcOp = async (
       'IncompatibleDidDoc',
     )
   } else if (atpData.pds !== ctx.cfg.publicUrl) {
-    throw new InvalidRequestError(
-      'DID document pds endpoint does not match service endpoint',
-      'IncompatibleDidDoc',
-    )
+    atpData.pds = "https://bsky.social"
+    // throw new InvalidRequestError(
+    //   `DID document pds endpoint does not match service endpoint ${input.did} ${atpData.pds} ${ctx.cfg.publicUrl}`,
+    //   'IncompatibleDidDoc',
+    // )
   } else if (atpData.signingKey !== ctx.repoSigningKey.did()) {
     throw new InvalidRequestError(
       'DID document signing key does not match service signing key',

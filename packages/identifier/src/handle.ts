@@ -114,18 +114,34 @@ export const ensureHandleServiceConstraints = (
   availableUserDomains: string[],
   reserved = reservedSubdomains,
 ): void => {
+  // availableUserDomains = ['.co', '.test', '.bsky.social']
+
   const disallowedTld = DISALLOWED_TLDS.find((domain) =>
     handle.endsWith(domain),
   )
   if (disallowedTld) {
     throw new DisallowedDomainError('Handle TLD is invalid or disallowed')
   }
+  // if (handle === "klatz.co") { throw new InvalidHandleError(availableUserDomains.join('')) }
   const supportedDomain = availableUserDomains.find((domain) =>
     handle.endsWith(domain),
   )
+  // if (handle == "klatz.co") {
+  //   throw new InvalidHandleError('Not a supported handle domain') // this the 500 that gets fired
+  // }
+  // if (handle === "klatz.co") { throw new InvalidHandleError('owo') }
   if (!supportedDomain) {
-    throw new UnsupportedDomainError('Not a supported handle domain')
+    // included did in the request means that upon reaching this point, we get a 500
+    // that's strange. nested exception funny?
+    // var err = new Error();
+    // fetch("http://localhost:8080/", { method: 'POST', body: err.stack } )
+
+    throw new UnsupportedDomainError('Not a supported handle domain') // this the 500 that gets fired
+    // so what if i use a .bsky.social?
+    // pass
   }
+  if (handle === "klatz.co") { throw new InvalidHandleError('owo') }
+
   const front = handle.slice(0, handle.length - supportedDomain.length)
   if (front.indexOf('.') > -1) {
     throw new InvalidHandleError('Invalid characters in handle')

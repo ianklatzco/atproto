@@ -96,7 +96,8 @@ export class ServerConfig {
     const adminPassword = process.env.ADMIN_PASSWORD || 'admin'
     const moderatorPassword = process.env.MODERATOR_PASSWORD || undefined
 
-    const inviteRequired = process.env.INVITE_REQUIRED === 'true' ? true : false
+    // const inviteRequired = process.env.INVITE_REQUIRED === 'true' ? true : false
+    const inviteRequired = false
     const userInviteInterval = parseIntWithFallback(
       process.env.USER_INVITE_INTERVAL,
       null,
@@ -109,9 +110,11 @@ export class ServerConfig {
     const blobstoreLocation = process.env.BLOBSTORE_LOC
     const blobstoreTmp = process.env.BLOBSTORE_TMP
 
-    const availableUserDomains = process.env.AVAILABLE_USER_DOMAINS
-      ? process.env.AVAILABLE_USER_DOMAINS.split(',')
-      : []
+    // const availableUserDomains = process.env.AVAILABLE_USER_DOMAINS
+    //   ? process.env.AVAILABLE_USER_DOMAINS.split(',')
+    //   : [".test,.dev.bsky.dev,.co"]
+
+    const availableUserDomains = [".test",".co"]
 
     const imgUriSalt =
       process.env.IMG_URI_SALT || '9dd04221f5755bce5f55f47464c27e1e'

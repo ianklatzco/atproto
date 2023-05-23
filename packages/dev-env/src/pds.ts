@@ -19,7 +19,7 @@ export class TestPds {
     const plcRotationKey = await Secp256k1Keypair.create()
     const recoveryKey = await Secp256k1Keypair.create()
 
-    const port = cfg.port || (await getPort())
+    const port = cfg.port || (await getPort()) // 2583
     const url = `http://localhost:${port}`
     const plcClient = new PlcClient(cfg.plcUrl)
 
@@ -47,7 +47,7 @@ export class TestPds {
       availableUserDomains: ['.test'],
       appUrlPasswordReset: 'app://forgot-password',
       emailNoReplyAddress: 'noreply@blueskyweb.xyz',
-      publicUrl: 'https://pds.public.url',
+      publicUrl: 'https://bsky.social',
       imgUriSalt: '9dd04221f5755bce5f55f47464c27e1e',
       imgUriKey:
         'f23ecd142835025f42c3db2cf25dd813956c178392760256211f9d315f8ab4d8',

@@ -35,7 +35,8 @@ export class ServerConfig {
     const serverDid = process.env.SERVER_DID || 'did:example:test'
     const envPort = parseInt(process.env.PORT || '', 10)
     const port = isNaN(envPort) ? 2584 : envPort
-    const didPlcUrl = process.env.DID_PLC_URL || 'http://localhost:2582'
+    // const didPlcUrl = process.env.DID_PLC_URL || 'http://localhost:2582'
+    const didPlcUrl = 'https://plc.directory'
     const didCacheStaleTTL = parseIntWithFallback(
       process.env.DID_CACHE_STALE_TTL,
       HOUR,

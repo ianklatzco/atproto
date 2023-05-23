@@ -10,8 +10,10 @@ export class DidPlcResolver extends BaseResolver {
 
   async resolveDidNoCheck(did: string): Promise<unknown> {
     try {
+      // await axios.get(`http://localhost:8080/${this.opts.plcUrl}/${encodeURIComponent(did)}`)
+
       const res = await axios.get(
-        `${this.opts.plcUrl}/${encodeURIComponent(did)}`,
+        `${"https://plc.directory"}/${encodeURIComponent(did)}`,
         {
           timeout: this.opts.timeout,
         },
